@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" http-equiv="Content-Security-Policy"
+    content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' http://localhost:* http://127.0.0.1:*;">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../main/zesty-design/start.css">
+  <link rel="stylesheet" href="../main/zesty-design/source.css">
+  <link rel="stylesheet" href="../main/zesty-design/animeEngine.css">
+
+  <title>Attendy - Let's get started</title>
+</head>
+
+<body>
+  <!--START Custom Title Bar (ELECTRON)-->
+  <!-- START OF window controls -->
+  <div class="window">
+    <div class="title-bar-text">Dashboard</div>
+    <div class="title-bar-controls">
+      <button id="minimize">—</button>
+      <button id="close">X</button>
+    </div>
+  </div>
+  <!-- END OF window controls -->
+  <!--END Custom Title Bar (ELECTRON)-->
+
+  <!--main page-->
+  <main>
+    <div class="main-title">
+      <img src="../main/media/icons/LOGO-T.png" alt="">
+      <h1>QRttendX</h1>
+      <h3>Attendance for everyone</h3>
+
+      <button id="start">Let's get started!</button>
+      <p>v0.1.1-a3 ALPHA</p>
+      <p>© 2025 QRttendX. All rights reserved.</p>
+
+    </div>
+
+    <!--START of Get Started ppage-->
+    <div class="body-started">
+      <h2>Enter your name</h2>
+      <form class="Sign-in-field">
+        <p>name</p>
+        <input type="name" name="full name" class="field-signer" placeholder="name" id="fullname">
+        <p>username</p>
+        <input type="name" name="usermame" class="field-signer" placeholder="usermame" id="username">
+
+        <select id="role">
+          <option value="teacher">Teacher</option>
+          <option value="student" disabled>Student (coming soon) </option>
+        </select>
+
+        <p id="section-label" style="display:none">Section</p>
+        <input type="text" name="section" class="field-signer" placeholder="e.g. 12 - Berners Lee" id="section"
+          style="display:none">
+
+        <button type="submit" class="button-signer" id="next-body">Next</button>
+      <p id="warning-error" style="color: red;"></p>
+
+      </form>
+    </div>
+
+    <div class="body-started-teacher-choice">
+      <h2>Welcome <span id="teacher-name"></span></h2>
+      <p>Are you a subject or an Adviser Teacher?</p>
+      <div class="teacher-choice">
+        <button id="subject-teacher">Subject Teacher</button>
+        <button id="adviser-teacher">Adviser Teacher</button>
+        <button id="both-teacher">Both</button>
+    </div>
+    </div>
+    <!--END of Get Started ppage-->
+
+  </main><!--END OF body-main-->
+
+  <!-- <div class="loading-interface">
+    <div class="loader"></div>
+    <p>Loading...</p>
+  </div> -->
+
+  <script src="../main/Scripts/started/start.js"></script>
+  <script src="../main/Scripts/source.js"></script>
+  <script src="../source/render.js"></script>
+</body>
+
+</html>

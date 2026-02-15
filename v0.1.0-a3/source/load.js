@@ -1,0 +1,108 @@
+// I forgot to give credit to my Big cousin Spades for uhh Whatever he slap in this code..
+// but yea thanks Big Cousin Spades for the help :D
+const { contextBridge, ipcRenderer } = require('electron');
+
+contextBridge.exposeInMainWorld('electronAPI', {
+  windowControl: (action) => ipcRenderer.send('window-control', action),
+  // Persist small app settings via main-process Store
+  setSetting: (key, value) => ipcRenderer.invoke('set-setting', key, value),
+  getSetting: (key) => ipcRenderer.invoke('get-setting', key),
+});
+
+contextBridge.exposeInMainWorld("attendyAPI", {
+  // Session Management
+  saveSession: (user) => ipcRenderer.invoke("save-session", user),
+  getSession: () => ipcRenderer.invoke("get-session"),
+  logout: () => ipcRenderer.invoke("logout"),
+  openDashboard: () => ipcRenderer.send("open-dashboard"),
+  // User setting/etc. Management
+  opensetting: () => ipcRenderer.send("setting"),
+  opensupport: () => ipcRenderer.send("support"),
+  sendSupportMessage: (message) => ipcRenderer.invoke("send-support-message", message),
+
+
+  // will Create user then we shiball the QR Generator at the dashboard
+  async createUser(fullname, username, role, section) {
+    const body = { fullname, username, role };
+    if (typeof section !== 'undefined' && section !== null) body.section = section;
+    const res = await fetch("http://localhost:5005/create_user", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(body)
+    });
+
+    return await res.json(); // returns user + QR base64
+  },
+
+  //QR Generation - automatic if user exists 
+  async generateQR(data) {
+    const res = await fetch("http://localhost:5005/generate_qr", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data) // fullname, username, role
+    });
+
+    return await res.json(); // returns { ok:true, data_url:"..." }
+  },
+  //this part will most likely blown up the Attendy Engine if not coded properly
+  recordAttendance: (userData) => //specifically record ur balls lol.
+    fetch("http://localhost:5005/record_attendance", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(userData)
+    }).then(res => res.json()),
+
+  // Bulk set time_out for attendance rows (ids: array, time_out: ISO string)
+  setTimeoutForRows: (ids, time_out) =>
+    fetch("http://localhost:5005/set_timeouts_bulk", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ids, time_out })
+    }).then(res => res.json()),
+
+  // Set time_out for a single attendance row and optionally change status
+  setTimeoutForRow: (id, time_out, status) =>
+    fetch("http://localhost:5005/set_timeout", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id, time_out, status })
+    }).then(res => res.json()),
+
+  // Delete a single attendance row by id
+  deleteAttendanceRow: (id) =>
+    fetch("http://localhost:5005/delete_attendance_row", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id })
+    }).then(res => res.json()),
+
+  updateAttendance: (id, status) => //update ur attendance status if you committed a sin?
+    fetch("http://localhost:5005/update_attendance", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id, status })
+    }).then(res => res.json()),
+
+  getAttendance: () =>
+    fetch("http://localhost:5005/get_attendance").then(res => res.json()),
+
+  editAttendance: (id, newData) =>
+    fetch("http://localhost:5005/edit_attendance", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(Object.assign({ id }, (newData || {})))
+    }).then(res => res.json()),
+
+  // Delete user by username
+  deleteUser: (username) =>
+    fetch("http://localhost:5005/delete_user", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username })
+    }).then(res => res.json()),
+
+});

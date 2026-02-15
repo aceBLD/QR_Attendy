@@ -1,0 +1,595 @@
+/*
+QR Attendy base on Website and WebApp lol
+Develop by BELDAD-Ace on Github with the team group 1 for PR2
+aka Jhon Benedict Belad
+
+all rights reserved 2025
+
+*/
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /* RANDOM ANTI TEXT SELECT GO */
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/*START OF Custom Title Bar*/
+
+.window {
+  color: white;
+  position: sticky;
+  width: 100%;
+  height: 32px;
+  background: #1d1d1d;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+
+  -webkit-app-region: drag;
+
+  .title-bar-text {
+    margin-left: 12px;
+    font-size: 14px;
+    color: var(--bg-clr-primary);
+  }
+
+  .title-bar-controls {
+    position: absolute;
+    right: 0;
+    display: flex;
+    flex-direction: row;
+    -webkit-app-region: no-drag;
+
+    button {
+      background-color: #1d1d1d;
+      color: white;
+      transition: 150ms ease-in-out;
+
+      width: 46px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+
+      border: none;
+
+      &:hover {
+        background-color: #545454;
+      }
+
+      &:last-child:hover {
+        background: #ff0000;
+      }
+    }
+  }
+}
+
+/*END OF Custom Title Bar*/
+
+.app-info {
+  text-align: center;
+}
+
+.NOTICE-EXP {
+  color: red;
+}
+
+.SOON {
+  text-align: center;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  overflow: hidden;
+}
+
+main {
+  overflow: none;
+  position: absolute;
+  bottom: 0;
+  top: 32px;
+  left: 0;
+  right: 0;
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track-clr);
+  border-radius: 20px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  transition: 350ms ease-in-out;
+  border-radius: 20px;
+  background: var(--scrollbar-thumb-clr);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover-clr);
+}
+
+
+:root {
+  /* main */
+  --bg-main-body-clr: #efefef;
+
+  --bg-sidebar-clr: linear-gradient(162deg, #006ac0 0%, white 15%);
+
+  /* specifically for containers lolz */
+  --shadow-clr: rgba(0, 0, 0, 0.2);
+  --shadow-inverse-clr: rgba(255, 255, 255, 0.2);
+  --shadow-label-clr: rgba(0, 0, 0, 0.1);
+  --shadow-label-hover-clr: rgba(0, 0, 0, 0.383);
+  --scrollbar-track-clr: #494949;
+  --scrollbar-thumb-clr: #7c7c7c;
+  --scrollbar-thumb-hover-clr: #adadad;
+  /* sidebar */
+  --sidebar-txt-clr: #000000;
+  --sidebar-txt-inverse-clr: #ffffff;
+  --sidebar-svg-clr: #000000;
+  --sidebar-active-clr: #00000023;
+  --sidebar-hover-clr: #c8c8c879;
+
+  --QRimage-border-bg-clr: #000000;
+  --QRbutton-bg-clr: #b6b6b6;
+  --Qrbutton-hover-bg-clr: #9e9e9e;
+
+  /* Table (Universal) */
+  --tableTr-bg-clr: #ffffff;
+  --tableTboy-bg-clr: #e4e4e4;
+
+  /* dashboard */
+  --dash-txt-clr: #000000;
+  --dash-txt-secondary-clr: #000000;
+  --dash-inverse-txt-clr: #ffffff;
+  --dash-svg-clr: #000000;
+  --dash-pfCard-bg-clr: #eaeaea;
+  --dashContainer-bg-clr: #d6d6d6;
+  --dashStat-numberin-bg-clr: #f2f2f2;
+
+  /* Attendance  */
+  --options-bg-clr: #c2c2c2;
+  --addStudent-btn-bg-clr: #969696;
+  --addStudent-btn-hover-bg-clr: #757575;
+
+  --outSetter-bg-clr: #bcbcbc;
+
+  /* Calendar */
+  --dayCell-bg-clr: #ffffff;
+  --dayCell-outline-clr: #2b7ae4;
+  --dayCell-selected-bg-clr: linear-gradient(180deg, #eaf4ff, #d8eefe);
+
+  --listStudentCalendar-option-bg-clr: #e4e4e4;
+  --listStudentCalendar-btn-clr: #fcfcfc;
+  --listStudentCalendar-btn-border-clr: #c2c2c2;
+  --listStudentCalendar-btn-hover-clr: #8e8e8e;
+  --listStudentCalendar-txt-hover-clr: #79ff84;
+
+  /* settings */
+  --btn-setting-clr: #000000;
+  --btn-setting-bg-clr: #b7b7b7;
+}
+
+.dark-theme {
+  /* Dark theme variable overrides */
+  --bg-main-body-clr: #0f0f0f;
+  /* dark navy */
+  --bg-sidebar-clr: linear-gradient(162deg, #04007e -1%, #000716 15%);
+
+  --shadow-clr: hsla(0, 0%, 100%, 0.3);
+  --shadow-inverse-clr: rgba(255, 255, 255, 0.03);
+  --shadow-label-clr: rgba(255, 255, 255, 0.1);
+  --shadow-label-hover-clr: rgba(255, 255, 255, 0.383);
+
+  --sidebar-txt-clr: #dbe7ef;
+  --sidebar-txt-inverse-clr: #0b1220;
+  --sidebar-svg-clr: #c7d2de;
+  --sidebar-active-clr: #bfbfbf1b;
+  --sidebar-hover-clr: #ffffff38;
+
+  --QRimage-border-bg-clr: #ffffff;
+  --QRbutton-bg-clr: #242a2f;
+  --Qrbutton-hover-bg-clr: #34393f;
+
+  /* Table (Universal) */
+  --tableTr-bg-clr: #202121;
+  --tableTboy-bg-clr: #0a0a0a;
+
+  /* dashboard */
+  --dash-txt-clr: #e6eef6;
+  --dash-txt-secondary-clr: #dadada;
+  --dash-inverse-txt-clr: #0b1220;
+  --dash-svg-clr: #d9e6f2;
+  --dash-pfCard-bg-clr: #222222;
+  --dashContainer-bg-clr: #1b1b1b;
+  --dashStat-numberin-bg-clr: #0f0f0f;
+
+  /* Attendance  */
+  --options-bg-clr: #121418;
+  --addStudent-btn-bg-clr: #2a2f33;
+  --addStudent-btn-hover-bg-clr: #3b4045;
+
+  --outSetter-bg-clr: #131617;
+
+  /* Calendar */
+  --dayCell-bg-clr: #4f4f50;
+  --dayCell-outline-clr: #ffffff;
+  /* blue accent */
+  --dayCell-selected-bg-clr: linear-gradient(180deg, #494949, #2c2c2c);
+
+  --listStudentCalendar-option-bg-clr: #0d1114;
+  --listStudentCalendar-btn-clr: #0f1316;
+  --listStudentCalendar-btn-border-clr: #1f2326;
+  --listStudentCalendar-btn-hover-clr: #273034;
+  --listStudentCalendar-txt-hover-clr: #8be79d;
+
+  /* settings */
+  --btn-setting-clr: #ffffff;
+  --btn-setting-bg-clr: #3d3d3d;
+
+  /*  */
+}
+
+/* =========================================================== */
+/* BASED THEME (White theme mode) */
+/* =========================================================== */
+
+main,
+body {
+  transition: 350ms ease-in-out;
+  background-color: var(--bg-main-body-clr);
+}
+
+#side-bar {
+  background: var(--bg-sidebar-clr);
+
+  .sub,
+  .sub2 {
+    color: var(--sidebar-txt-clr);
+  }
+
+  svg {
+    fill: var(--sidebar-svg-clr);
+  }
+
+  button {
+    color: var(--dash-txt-clr);
+  }
+
+  li {
+    span {
+      color: var(--dash-txt-clr);
+    }
+
+    a {
+      color: var(--sidebar-txt-clr);
+    }
+
+    &.active {
+      background-color: var(--sidebar-active-clr);
+    }
+
+    &:hover:not(:first-child) {
+      background-color: var(--sidebar-hover-clr);
+    }
+  }
+
+  #QR-main {
+    &:hover {
+      background-color: transparent;
+    }
+
+    .QR-container {
+      color: var(--dash-txt-clr);
+
+      .qr-image-container {
+        border: 2px solid var(--QRimage-border-bg-clr);
+        box-shadow: -10px 0px 15px var(--shadow-clr);
+      }
+    }
+
+    .button-qr-container {
+      button {
+        border: none;
+        background-color: var(--QRbutton-bg-clr);
+        color: var(--sidebar-txt-clr);
+
+        &:hover {
+          background-color: var(--Qrbutton-hover-bg-clr);
+        }
+      }
+    }
+  }
+
+}
+
+/* Table (Universal) */
+table {
+  color: var(--dash-txt-clr);
+
+  tr {
+    background-color: var(--tableTr-bg-clr);
+  }
+
+  tbody {
+
+    tr,
+    td {
+      background-color: var(--tableTboy-bg-clr);
+    }
+  }
+}
+
+.notification-btn {
+  svg {
+    fill: var(--dash-svg-clr);
+  }
+  
+}
+
+.sub-dashboard-container {
+  color: var(--dash-txt-clr);
+
+  .profile-card {
+    background-color: var(--dash-pfCard-bg-clr);
+    box-shadow: -7px 4px 19px var(--shadow-clr);
+
+    #notificaton {
+      svg {
+        fill: var(--dash-svg-clr);
+      }
+    }
+
+    .profile-info {
+      color: var(--dash-txt-clr);
+    }
+  }
+}
+
+/* Containers */
+.dashboard-container {
+  .stat-dash-container {
+    background-color: var(--dashContainer-bg-clr);
+    color: var(--dash-txt-clr);
+
+    .numbering {
+      background-color: var(--dashStat-numberin-bg-clr);
+
+      svg {
+        fill: var(--dash-svg-clr);
+      }
+    }
+  }
+
+  .tableOf-Students,
+  .tableOf-mostPresent {
+    color: var(--dash-txt-clr);
+    background-color: var(--dashContainer-bg-clr);
+    box-shadow: -7px 4px 19px var(--shadow-clr);
+  }
+
+}
+
+/* Attendance Table Container */
+.attendance-table-container {
+  background-color: var(--dashContainer-bg-clr);
+
+  .options {
+    background-color: var(--options-bg-clr);
+
+    #add-student,
+    #importORexport {
+
+      background-color: var(--addStudent-btn-bg-clr);
+      color: var(--dash-txt-secondary-clr);
+      border: 0.5px solid;
+
+      &:hover {
+        background-color: var(--addStudent-btn-hover-bg-clr);
+      }
+    }
+
+    .out-setter {
+      color: var(--dash-txt-clr);
+      background-color: var(--outSetter-bg-clr);
+      box-shadow: -7px 4px 19px var(--shadow-inverse-clr);
+
+    }
+  }
+}
+
+/* calendar */
+
+.calendar-grid .day-cell {
+  box-shadow: -5px 1px 4px var(--shadow-clr);
+  background: var(--dayCell-bg-clr);
+
+  &.today {
+    outline: 2px solid var(--dayCell-outline-clr);
+  }
+}
+
+.day-mark {
+  color: #333;
+}
+
+.day-cell.selected {
+  background: var(--dayCell-selected-bg-clr);
+  outline: 2px solid var(--dayCell-outline-clr);
+  box-shadow: 0 6px 12px var(--shadow-clr);
+}
+
+.calendar-X-stat-container {
+  color: var(--dash-txt-clr);
+  box-shadow: -7px 4px 19px var(--shadow-clr);
+  background-color: var(--dashContainer-bg-clr);
+}
+
+.list-student-calendar-container {
+  color: var(--dash-txt-clr);
+  box-shadow: -7px 4px 19px var(--shadow-clr);
+  background-color: var(--dashContainer-bg-clr);
+
+  .option-caption {
+    background-color: var(--listStudentCalendar-option-bg-clr);
+
+    .as-excel {
+      color: var(--dash-txt-clr);
+      background-color: var(--listStudentCalendar-btn-clr);
+      border: 1px solid var(--listStudentCalendar-btn-border-clr);
+
+      svg {
+        fill: var(--dash-svg-clr);
+
+        &:hover {
+          fill: var(--listStudentCalendar-txt-hover-clr);
+        }
+      }
+
+      &:hover {
+        background-color: var(--listStudentCalendar-btn-hover-clr);
+        color: var(--listStudentCalendar-txt-hover-clr);
+      }
+    }
+  }
+}
+
+/* Settings Container */
+.settings-container {
+  color: var(--dash-txt-clr);
+
+  .Customization-container,
+  .Accesibility-container {
+    label {
+      box-shadow: -7px 7px 8px var(--shadow-label-clr);
+
+      &:hover {
+        box-shadow: -7px 7px 8px var(--shadow-label-hover-clr);
+      }
+    }
+
+  }
+
+  .full-profile-container {
+    &:hover {
+
+      .full-profile-settings-container {
+        box-shadow: -7px 7px 8px var(--shadow-clr);
+      }
+    }
+  }
+}
+
+.full-profile-settings-container {
+  color: var(--dash-txt-clr);
+
+  button {
+    text-align: start;
+    color: var(--btn-setting-clr);
+    background-color: var(--btn-setting-bg-clr);
+    &:disabled {
+      color: var(--addStudent-btn-hover-bg-clr);
+      background-color: var(--dashContainer-bg-clr);
+    }
+  }
+}
+
+.notification-panel {
+  background-color: var(--dashContainer-bg-clr);
+  color: var(--dash-txt-clr);
+
+  .notifcation-item {
+    &:hover {
+      background-color: var(--sidebar-hover-clr);
+    }
+  }
+}
+
+.main-statistics-container {
+  color: var(--dash-txt-clr);
+}
+
+/* ========================================== */
+/* miscellaneous */
+/* ========================================== */
+
+.loading-interface {
+  transition: all 0.5S ease-in-out;
+  opacity: 0;
+  position: fixed;
+  top: 32px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.872);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+
+  .loader {
+    box-shadow: #0097b2 0px 0px 15px;
+    border: 8px solid #d4d4d4;
+    border-top: 8px solid #494949;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: loader 2s linear infinite;
+  }
+
+  p {
+    font-weight: bold;
+    padding: 15px;
+    color: white;
+  }
+}
+
+.loading-interface-dash {
+  transition: all 0.6s ease-in-out;
+  opacity: 0;
+  position: fixed;
+  top: 32px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #494949;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+
+  img {
+    opacity: 1;
+    -webkit-user-drag: none;
+    /* Chrome, Safari, Edge */
+    -webkit-user-select: none;
+    /* Chrome, Safari */
+    -moz-user-select: none;
+    /* Firefox */
+    -ms-user-select: none;
+    /* IE/Edge */
+    user-select: none;
+    /* Standard */
+    width: 150px;
+    filter: drop-shadow(20px 20px 20px black);
+
+    animation: loadingLogo 5s ease-in-out infinite 1s;
+
+  }
+}
